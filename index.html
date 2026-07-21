@@ -940,7 +940,7 @@ function loadState() {
       // Restore active payment button
       document.querySelectorAll('.pago-btn').forEach(b => b.classList.toggle('active', b.dataset.pago === state.pago));
       // Restore IVA toggle
-      if (useIva) {
+      if (state.iva) {
         var ivaT = document.getElementById('ivaToggle');
         ivaT.classList.add('active');
         ivaT.querySelector('.iva-check').textContent = '\u2713';
@@ -1492,14 +1492,9 @@ function renderBreakdown() {
 
   if (!hasAnyPrice) { bdEl.innerHTML = ''; return; }
 
-  var pagoConf = PAGO_CONFIG[usePago];
+  var pagoConf = PAGO_CONFIG[state.pago];
   var recargoPct = pagoConf.recargo;
-  var recargoMonto = Math.round(subtotal * recargoPct);
-  var subconRecargo = subtotal + recargoMonto;
-  var ivaMonto = useIva ? Math.round(subconRecargo * 0.21) : 0;
-  var totalFinal = subconRecargo + ivaMonto;
-
-  var descPct = useDesc;
+  var descPct = state.descuento || 0;
   var descMonto = Math.round(subtotal * descPct);
   var subtotalDesc = subtotal - descMonto;
   var descLabel = (descPct * 100) + '%';
@@ -1592,14 +1587,14 @@ document.getElementById('waFullBtn').addEventListener('click', function(e) {
   });
   lines.push('');
   // Apply descuento
-  var descPct = useDesc;
+  var descPct = state.descuento || 0;
   if (descPct > 0) {
     var descMonto = Math.round(subtotal * descPct);
     subtotal = subtotal - descMonto;
     lines.push('Descuento: -' + (descPct*100) + '% (-$' + descMonto.toLocaleString('es-AR') + ')');
   }
   // Apply recargo
-  var pagoConf = PAGO_CONFIG[usePago];
+  var pagoConf = PAGO_CONFIG[state.pago];
   if (pagoConf.recargo > 0) {
     var recargo = Math.round(subtotal * pagoConf.recargo);
     subtotal += recargo;
@@ -1847,7 +1842,7 @@ function generatePDF(overrideData) {
   doc.text(`Fecha: ${fmt(hoy)}`, 140, 44);
   doc.setTextColor(200,60,30);
   doc.setFont('helvetica','bold');
-  doc.text(`Válido hasta: ${fmt(vence)} (30 días)`, 140, 50);
+  doc.text(`Válido hasta: ${fmt(vence)} (${vigDias} días)`, 140, 50);
 
   // Cliente
   doc.setTextColor(23,25,28);
@@ -1976,7 +1971,7 @@ function generatePDF(overrideData) {
     }
 
     // IVA
-    if (state.iva) {
+    if (useIva) {
       yT += 6;
       doc.setTextColor(60,140,90);
       doc.setFont('helvetica','bold');
