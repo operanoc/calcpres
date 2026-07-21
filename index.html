@@ -158,7 +158,11 @@
   .breakdown-row.bd-subtotal{font-weight:700;color:var(--paper);border-bottom:1px solid var(--line);padding-bottom:6px;margin-bottom:3px;}
   .breakdown-row.bd-recargo{color:var(--warn);}
   .breakdown-row.bd-iva{color:var(--ok);}
+  .breakdown-row.bd-desc{color:#5ba3d9;}
   .breakdown-row.bd-final{font-weight:800;font-size:16px;color:var(--safety);border-top:2px solid var(--safety);padding-top:6px;margin-top:3px;}
+  .desc-custom{display:inline-flex;align-items:center;gap:6px;}
+  .desc-custom input{width:52px;text-align:center;background:var(--ink);color:var(--safety);border:1px solid var(--line);border-radius:var(--radius);padding:6px 4px;font-size:12px;font-weight:800;}
+  .desc-custom input:focus{border-color:var(--safety);outline:none;}
 
 </style>
 </head>
@@ -226,6 +230,19 @@
         <button class="pago-btn active" data-pago="efectivo">Efectivo / Transferencia</button>
         <button class="pago-btn" data-pago="tarjeta1">Tarjeta en 1 pago (+10%)</button>
         <button class="pago-btn" data-pago="tarjeta3">Tarjeta en 3 o 6 pagos (+45%)</button>
+      </div>
+      <div class="pago-label">Descuento</div>
+      <div class="pago-row">
+        <button class="desc-btn" data-desc="0">Sin descuento</button>
+        <button class="desc-btn" data-desc="5">5%</button>
+        <button class="desc-btn" data-desc="10">10%</button>
+        <button class="desc-btn" data-desc="15">15%</button>
+        <button class="desc-btn" data-desc="custom">Custom</button>
+      </div>
+      <div class="desc-custom" id="descCustomWrap" style="display:none;margin-bottom:10px;">
+        <span style="font-size:12px;color:var(--paper-dim);">%</span>
+        <input type="number" id="descCustomInput" min="0" max="100" step="1" value="0" placeholder="0">
+        <button class="desc-apply" style="background:var(--safety);color:var(--ink);border:none;border-radius:var(--radius);padding:6px 12px;font-size:11px;font-weight:800;cursor:pointer;">Aplicar</button>
       </div>
       <div class="iva-toggle" id="ivaToggle" data-iva="false">
         <span class="iva-check"></span>
@@ -1175,6 +1192,43 @@ document.querySelectorAll('.pago-btn').forEach(btn => {
   });
 });
 
+/* ---------- descuento ---------- */
+state.descuento = 0;
+
+document.querySelectorAll('.desc-btn').forEach(btn => {
+  btn.addEventListener('click', function() {
+    document.querySelectorAll('.desc-btn').forEach(b => b.classList.remove('active'));
+    this.classList.add('active');
+    var d = this.dataset.desc;
+    if (d === 'custom') {
+      document.getElementById('descCustomWrap').style.display = 'inline-flex';
+      var customVal = parseInt(document.getElementById('descCustomInput').value) || 0;
+      state.descuento = customVal / 100;
+    } else {
+      document.getElementById('descCustomWrap').style.display = 'none';
+      state.descuento = parseInt(d) / 100;
+    }
+    renderBreakdown();
+  });
+});
+
+document.querySelector('.desc-apply').addEventListener('click', function() {
+  var val = parseInt(document.getElementById('descCustomInput').value) || 0;
+  if (val < 0) val = 0;
+  if (val > 100) val = 100;
+  document.getElementById('descCustomInput').value = val;
+  state.descuento = val / 100;
+  renderBreakdown();
+});
+
+document.getElementById('descCustomInput').addEventListener('input', function() {
+  var val = parseInt(this.value) || 0;
+  if (val < 0) val = 0;
+  if (val > 100) val = 100;
+  state.descuento = val / 100;
+  renderBreakdown();
+});
+
 document.getElementById('ivaToggle').addEventListener('click', function() {
   state.iva = !state.iva;
   this.classList.toggle('active', state.iva);
@@ -1204,16 +1258,34 @@ function renderBreakdown() {
   var ivaMonto = state.iva ? Math.round(subconRecargo * 0.21) : 0;
   var totalFinal = subconRecargo + ivaMonto;
 
+  var descPct = state.descuento || 0;
+  var descMonto = Math.round(subtotal * descPct);
+  var subtotalDesc = subtotal - descMonto;
+  var descLabel = (descPct * 100) + '%';
+
   var html = '<div class="breakdown">';
   html += '<div class="breakdown-row bd-subtotal"><span>Subtotal (sin IVA)</span><span>$' + subtotal.toLocaleString('es-AR') + '</span></div>';
 
-  if (recargoPct > 0) {
-    html += '<div class="breakdown-row bd-recargo"><span>Recargo ' + pagoConf.label + ' (+' + (recargoPct * 100) + '%)</span><span>+$' + recargoMonto.toLocaleString('es-AR') + '</span></div>';
-    html += '<div class="breakdown-row" style="font-weight:600;color:var(--paper);"><span>Subtotal con recargo</span><span>$' + subconRecargo.toLocaleString('es-AR') + '</span></div>';
+  if (descPct > 0) {
+    html += '<div class="breakdown-row bd-desc"><span>Descuento (' + descLabel + ')</span><span>-$' + descMonto.toLocaleString('es-AR') + '</span></div>';
+    html += '<div class="breakdown-row" style="font-weight:600;color:var(--paper);"><span>Subtotal con descuento</span><span>$' + subtotalDesc.toLocaleString('es-AR') + '</span></div>';
   }
 
+  var baseRecargo = descPct > 0 ? subtotalDesc : subtotal;
+  var recargoMonto2 = Math.round(baseRecargo * recargoPct);
+  var subconRecargo2 = baseRecargo + recargoMonto2;
+
+  if (recargoPct > 0) {
+    html += '<div class="breakdown-row bd-recargo"><span>Recargo ' + pagoConf.label + ' (+' + (recargoPct * 100) + '%)</span><span>+$' + recargoMonto2.toLocaleString('es-AR') + '</span></div>';
+    html += '<div class="breakdown-row" style="font-weight:600;color:var(--paper);"><span>Subtotal con recargo</span><span>$' + subconRecargo2.toLocaleString('es-AR') + '</span></div>';
+  }
+
+  var ivaBase = (descPct > 0 || recargoPct > 0) ? subconRecargo2 : subtotal;
+  var ivaMonto2 = state.iva ? Math.round(ivaBase * 0.21) : 0;
+  var totalFinal = ivaBase + ivaMonto2;
+
   if (state.iva) {
-    html += '<div class="breakdown-row bd-iva"><span>IVA 21%</span><span>+$' + ivaMonto.toLocaleString('es-AR') + '</span></div>';
+    html += '<div class="breakdown-row bd-iva"><span>IVA 21%</span><span>+$' + ivaMonto2.toLocaleString('es-AR') + '</span></div>';
   }
 
   html += '<div class="breakdown-row bd-final"><span>TOTAL FINAL</span><span>$' + totalFinal.toLocaleString('es-AR') + '</span></div>';
@@ -1394,11 +1466,15 @@ document.getElementById('pdfBtn').addEventListener('click', () => {
     margin: { left: 14, right: 14 }
   });
 
-  // Totales con forma de pago e IVA
+  // Totales con descuento, forma de pago e IVA
   var pagoConf = PAGO_CONFIG[state.pago];
   var recargoPct = pagoConf.recargo;
-  var recargoMonto = Math.round(pdfGrandTotal * recargoPct);
-  var subconRecargo = pdfGrandTotal + recargoMonto;
+  var descPct = state.descuento || 0;
+  var descMonto = Math.round(pdfGrandTotal * descPct);
+  var subtotalDesc = pdfGrandTotal - descMonto;
+  var baseRecargo = descPct > 0 ? subtotalDesc : pdfGrandTotal;
+  var recargoMonto = Math.round(baseRecargo * recargoPct);
+  var subconRecargo = baseRecargo + recargoMonto;
   var ivaMonto = state.iva ? Math.round(subconRecargo * 0.21) : 0;
   var totalFinal = subconRecargo + ivaMonto;
 
@@ -1417,6 +1493,19 @@ document.getElementById('pdfBtn').addEventListener('click', () => {
     doc.setTextColor(50,50,50);
     doc.setFontSize(10);
     doc.text('$' + pdfGrandTotal.toLocaleString('es-AR'), 196, yT, { align: 'right' });
+
+    // Descuento
+    if (descPct > 0) {
+      yT += 5;
+      doc.setTextColor(91,163,217);
+      doc.setFont('helvetica','bold');
+      doc.text('Descuento (-' + (descPct * 100) + '%):', 14, yT);
+      doc.text('-$' + descMonto.toLocaleString('es-AR'), 196, yT, { align: 'right' });
+      yT += 6;
+      doc.setTextColor(23,25,28);
+      doc.text('Subtotal con descuento:', 14, yT);
+      doc.text('$' + subtotalDesc.toLocaleString('es-AR'), 196, yT, { align: 'right' });
+    }
 
     // Forma de pago + recargo
     yT += 6;
