@@ -161,8 +161,80 @@
   .breakdown-row.bd-desc{color:#5ba3d9;}
   .breakdown-row.bd-final{font-weight:800;font-size:16px;color:var(--safety);border-top:2px solid var(--safety);padding-top:6px;margin-top:3px;}
   .desc-custom{display:inline-flex;align-items:center;gap:6px;}
+  .desc-btn{background:var(--panel-2);color:var(--paper);border:1px solid var(--line);border-radius:var(--radius);padding:8px 14px;font-size:12px;font-weight:700;cursor:pointer;transition:all .15s;}
+  .desc-btn:hover{border-color:var(--safety);}
+  .desc-btn.active{background:#5ba3d9;color:var(--ink);border-color:#5ba3d9;}
   .desc-custom input{width:52px;text-align:center;background:var(--ink);color:var(--safety);border:1px solid var(--line);border-radius:var(--radius);padding:6px 4px;font-size:12px;font-weight:800;}
   .desc-custom input:focus{border-color:var(--safety);outline:none;}
+
+
+  /* search */
+  .search-wrap{position:relative;margin-bottom:12px;}
+  .search-wrap input{width:100%;box-sizing:border-box;padding:10px 14px 10px 36px;font-size:14px;background:var(--ink);color:var(--paper);border:1px solid var(--line);border-radius:var(--radius);font-weight:500;}
+  .search-wrap input:focus{border-color:var(--safety);outline:none;}
+  .search-wrap .search-icon{position:absolute;left:12px;top:50%;transform:translateY(-50%);color:var(--paper-dim);font-size:14px;pointer-events:none;}
+
+  /* toast */
+  .toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(80px);background:var(--ok);color:#0e2018;padding:12px 24px;border-radius:var(--radius);font-weight:700;font-size:13px;z-index:9999;opacity:0;transition:all .3s ease;pointer-events:none;white-space:nowrap;}
+  .toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+
+  /* price per m2 */
+  .precio-m2{font-size:12px;color:var(--paper-dim);margin-top:6px;}
+  .precio-m2 b{color:var(--safety);font-weight:700;}
+
+  /* suggestions */
+  .sugeridos-box{margin-top:12px;padding:12px 14px;background:#1a2318;border:1px dashed var(--ok);border-radius:var(--radius);font-size:12px;color:var(--paper);display:none;}
+  .sugeridos-box .sug-title{color:var(--ok);font-weight:700;font-size:11px;text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px;}
+  .sugeridos-box .sug-item{display:flex;justify-content:space-between;align-items:center;padding:4px 0;border-bottom:1px solid var(--line);cursor:pointer;transition:background .15s;padding:4px 6px;margin:0 -6px;border-radius:var(--radius);}
+  .sugeridos-box .sug-item:last-child{border-bottom:none;}
+  .sugeridos-box .sug-item:hover{background:rgba(91,185,140,0.1);}
+  .sugeridos-box .sug-name{font-weight:600;}
+  .sugeridos-box .sug-price{color:var(--safety);font-weight:700;font-size:11px;}
+
+  /* clear cart btn */
+  .btn-clear{background:none;border:1px solid var(--line);color:var(--paper-dim);padding:6px 14px;border-radius:var(--radius);font-size:11px;font-weight:700;cursor:pointer;transition:all .15s;}
+  .btn-clear:hover{border-color:var(--warn);color:var(--warn);}
+
+  /* observaciones textarea */
+  .obs-textarea{width:100%;box-sizing:border-box;min-height:60px;resize:vertical;background:var(--ink);border:1px solid var(--line);color:var(--paper);padding:10px 14px;border-radius:var(--radius);font-size:13px;font-family:inherit;margin-top:6px;}
+  .obs-textarea:focus{outline:none;border-color:var(--safety);}
+
+  /* wa full budget btn */
+  .btn-wa-full{background:var(--ok);color:#0e2018;width:100%;margin-top:8px;padding:12px;font-size:14px;font-weight:800;border:none;border-radius:var(--radius);cursor:pointer;text-decoration:none;display:flex;align-items:center;justify-content:center;gap:8px;}
+  .btn-wa-full:hover{filter:brightness(1.08);}
+
+  /* vigencia */
+  .vigencia-row{display:flex;gap:12px;align-items:end;margin-top:10px;}
+  .vigencia-row select{background:var(--ink);color:var(--paper);border:1px solid var(--line);border-radius:var(--radius);padding:10px 14px;font-size:13px;font-weight:600;width:100%;}
+  .vigencia-row select:focus{outline:none;border-color:var(--safety);}
+
+
+  /* saved budgets */
+  .btn-saved{background:none;border:1px solid var(--line);color:var(--paper-dim);padding:6px 14px;border-radius:var(--radius);font-size:11px;font-weight:700;cursor:pointer;transition:all .15s;}
+  .btn-saved:hover{border-color:var(--safety);color:var(--safety);}
+  .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.7);z-index:10000;display:none;align-items:center;justify-content:center;padding:20px;}
+  .modal-overlay.show{display:flex;}
+  .modal{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);width:100%;max-width:620px;max-height:80vh;display:flex;flex-direction:column;overflow:hidden;}
+  .modal-hdr{display:flex;justify-content:space-between;align-items:center;padding:16px 20px;border-bottom:1px solid var(--line);}
+  .modal-hdr h3{margin:0;font-size:15px;font-weight:700;color:var(--paper);}
+  .modal-close{background:none;border:none;color:var(--paper-dim);font-size:20px;cursor:pointer;padding:4px 8px;line-height:1;}
+  .modal-close:hover{color:var(--warn);}
+  .modal-body{padding:16px 20px;overflow-y:auto;flex:1;}
+  .saved-item{padding:12px;border:1px solid var(--line);border-radius:var(--radius);margin-bottom:10px;background:var(--panel-2);position:relative;}
+  .saved-item .si-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;}
+  .saved-item .si-client{font-weight:700;font-size:14px;color:var(--paper);}
+  .saved-item .si-date{font-size:11px;color:var(--paper-dim);}
+  .saved-item .si-items{font-size:12px;color:var(--paper-dim);margin-bottom:6px;}
+  .saved-item .si-total{font-weight:800;font-size:16px;color:var(--safety);}
+  .saved-item .si-paid{position:absolute;top:8px;right:8px;background:rgba(226,115,74,0.15);color:var(--warn);font-size:10px;font-weight:800;padding:2px 8px;border-radius:var(--radius);text-transform:uppercase;letter-spacing:.08em;}
+  .saved-item .si-actions{display:flex;gap:6px;margin-top:8px;}
+  .si-btn{background:var(--ink);border:1px solid var(--line);color:var(--paper);padding:4px 10px;border-radius:var(--radius);font-size:11px;font-weight:700;cursor:pointer;}
+  .si-btn:hover{border-color:var(--safety);}
+  .si-btn.si-load{border-color:var(--ok);color:var(--ok);}
+  .si-btn.si-del{border-color:var(--warn);color:var(--warn);}
+  .si-btn.si-pay{border-color:#5ba3d9;color:#5ba3d9;}
+  .si-btn.si-unpay{border-color:var(--ok);color:var(--ok);}
+  .saved-empty{color:var(--paper-dim);font-size:13px;text-align:center;padding:30px 0;font-style:italic;}
 
 </style>
 </head>
@@ -180,6 +252,7 @@
   <div class="step">
     <div class="step-label"><span class="step-num">1</span><h2>Elegí el producto</h2></div>
     <div class="cat-tabs" id="catTabs"></div>
+    <div class="search-wrap"><span class="search-icon">🔍</span><input type="text" id="searchInput" placeholder="Buscar producto..."></div>
     <div class="grid" id="productGrid"></div>
     <div id="subOptions"></div>
   </div>
@@ -201,6 +274,8 @@
     <div class="waste-note" id="wasteNote"></div>
     <div class="extra-box" id="extraBox" style="display:none;"></div>
     <div class="rend-note" id="rendNote"></div>
+    <div class="precio-m2" id="precioM2"></div>
+    <div class="sugeridos-box" id="sugeridosBox"><div class="sug-title">Productos complementarios</div><div id="sugeridosList"></div></div>
     <div class="btn-row">
       <button class="btn btn-add" id="addBtn">+ Agregar al presupuesto</button>
       <a href="#" target="_blank" class="btn btn-wa" id="waBtn">📲 WhatsApp</a>
@@ -221,7 +296,39 @@
         <input type="text" id="telInput" placeholder="11 xxxx-xxxx">
       </div>
     </div>
+    <div class="field-row">
+      <div>
+        <label class="small">CUIT / DNI (opcional)</label>
+        <input type="text" id="cuitInput" placeholder="20-12345678-9">
+      </div>
+      <div>
+        <label class="small">Condición frente al IVA</label>
+        <select id="ivaCondInput">
+          <option value="Consumidor Final">Consumidor Final</option>
+          <option value="Monotributista">Monotributista</option>
+          <option value="Responsable Inscripto">Responsable Inscripto</option>
+          <option value="Exento">Exento</option>
+        </select>
+      </div>
+    </div>
+    <div class="vigencia-row">
+      <div style="flex:1;">
+        <label class="small">Validez del presupuesto</label>
+        <select id="vigenciaInput">
+          <option value="7">7 días</option>
+          <option value="15">15 días</option>
+          <option value="30" selected>30 días</option>
+          <option value="60">60 días</option>
+          <option value="90">90 días</option>
+        </select>
+      </div>
+    </div>
+    <div style="margin-top:10px;">
+      <label class="small">Observaciones (aparecen en el PDF)</label>
+      <textarea class="obs-textarea" id="obsInput" placeholder="Ej: Incluye entrega en zona norte. Consultar stock antes de retirar."></textarea>
+    </div>
 
+    <div style="display:flex;justify-content:flex-end;margin-bottom:10px;"><button class="btn-clear" id="clearCartBtn" style="display:none;">✕ Vaciar presupuesto</button></div>
     <div id="cartList"><div class="cart-empty">Todavía no agregaste productos. Calculá arriba y tocá "Agregar al presupuesto".</div></div>
 
     <div id="pagoSection" class="pago-section" style="display:none;">
@@ -251,6 +358,11 @@
       <div id="breakdown"></div>
     </div>
 
+    <div style="display:flex;gap:8px;margin-top:8px;flex-wrap:wrap;">
+      <button class="btn-saved" id="openSavedBtn">💾 Presupuestos guardados</button>
+      <button class="btn-saved" id="markPagadoBtn" style="display:none;">✅ Marcar como PAGADO</button>
+    </div>
+    <a href="#" target="_blank" class="btn-wa-full" id="waFullBtn" style="display:none;">📲 Compartir presupuesto por WhatsApp</a>
     <button class="btn btn-pdf" id="pdfBtn" disabled>📄 Descargar presupuesto en PDF</button>
   </div>
 
@@ -631,13 +743,7 @@ const PRECIOS = {
     sizes: {2: 40000}
   },
 
-  barrera_quimica: {
-    type: 'colorList', label: 'Tipo de aplicacion',
-    items: [
-      {label:'Saturacion vertical (muro nuevo)', sizes:{5: 0, 10: 0, 20: 0}},
-      {label:'Saturacion horizontal (losa)', sizes:{5: 0, 10: 0, 20: 0}}
-    ]
-  },
+  barrera_quimica: { type: 'simple', sizes: {5: 35000, 10: 55000, 20: 95000} },
 
   /* ── Pisos & Piscinas ── */
   lecatex_stone: {
@@ -683,7 +789,7 @@ const PRECIOS = {
 
   /* ── Soluciones Epoxi ── */
   base_niveladora_epoxi: { type: 'simple', sizes: {4: 0, 10: 0, 20: 0} },
-  porcelanato_liquido: { type: 'simple', sizes: {4: 0, 10: 0, 20: 0} },
+  porcelanato_liquido: { type: 'simple', sizes: {4: 120000, 10: 278000, 20: 540000} },
 
   /* ── Decoracion de paredes ── */
   estuco_veneciano: {
@@ -799,8 +905,90 @@ const PRECIOS = {
   piedra_granito: { type: 'simple', sizes: {30: 0} }
 };
 
-let state = { productoId:null, variante:null, manos:null, catFiltro:"Todos", colorIdx:0, pago:"efectivo", iva:false };
+let state = { productoId:null, variante:null, manos:null, catFiltro:"Todos", colorIdx:0, pago:"efectivo", iva:false, descuento:0 };
 let cart = [];
+
+/* ---------- toast ---------- */
+function showToast(msg) {
+  var t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  clearTimeout(t._timer);
+  t._timer = setTimeout(function(){ t.classList.remove('show'); }, 2500);
+}
+
+/* ---------- localStorage ---------- */
+function saveState() {
+  try {
+    var data = { cart: cart, state: { pago: state.pago, iva: state.iva, descuento: state.descuento } };
+    localStorage.setItem('lecatex_presupuesto', JSON.stringify(data));
+  } catch(e) {}
+}
+function loadState() {
+  try {
+    var raw = localStorage.getItem('lecatex_presupuesto');
+    if (!raw) return;
+    var data = JSON.parse(raw);
+    if (data.cart && data.cart.length) {
+      cart = data.cart;
+      if (data.state) {
+        if (data.state.pago) state.pago = data.state.pago;
+        if (data.state.iva) { state.iva = true; }
+        if (data.state.descuento) state.descuento = data.state.descuento;
+      }
+      renderCart();
+      // Restore active payment button
+      document.querySelectorAll('.pago-btn').forEach(b => b.classList.toggle('active', b.dataset.pago === state.pago));
+      // Restore IVA toggle
+      if (useIva) {
+        var ivaT = document.getElementById('ivaToggle');
+        ivaT.classList.add('active');
+        ivaT.querySelector('.iva-check').textContent = '\u2713';
+        ivaT.dataset.iva = 'true';
+      }
+      // Restore discount button
+      var descPct = state.descuento * 100;
+      if (descPct > 0) {
+        var found = false;
+        document.querySelectorAll('.desc-btn').forEach(b => {
+          if (parseInt(b.dataset.desc) === descPct) {
+            b.classList.add('active');
+            found = true;
+          } else { b.classList.remove('active'); }
+        });
+        if (!found) {
+          document.querySelector('.desc-btn[data-desc="custom"]').classList.add('active');
+          document.getElementById('descCustomWrap').style.display = 'inline-flex';
+          document.getElementById('descCustomInput').value = descPct;
+        }
+      }
+      showToast('Presupuesto restaurado (' + cart.length + ' items)');
+    }
+  } catch(e) {}
+}
+
+/* ---------- productos sugeridos ---------- */
+const SUGERIDOS = {
+  'revestimiento_texturado': ['fondo_base','sellador_paredes'],
+  'revestimiento_granito': ['fondo_base','sellador_paredes'],
+  'microcemento_pared': ['fondo_base','imprimacion_paredes'],
+  'microcemento_piso': ['fondo_base','imprimacion_pisos'],
+  'lecatex_stone': [],
+  'membrana_caucho': ['imprimacion_paredes'],
+  'membrana_hibrida': [],
+  'pintura_latex': ['fondo_base'],
+  'pintura_acrilica': ['fondo_base'],
+  'esmalte_sintetico': [],
+  'pintura_epoxi_piso': ['imprimacion_epoxi'],
+  'pintura_epoxi_pared': ['imprimacion_epoxi'],
+  'mortero_nivelacion': ['fondo_base'],
+  'enduido_plastico': ['fondo_base'],
+  'sellador_paredes': [],
+  'fondo_base': [],
+  'imprimacion_paredes': [],
+  'imprimacion_pisos': [],
+  'imprimacion_epoxi': [],
+};
 
 /* ---------- category tabs ---------- */
 const catTabsEl = document.getElementById('catTabs');
@@ -829,6 +1017,19 @@ CONFIG.productos.forEach(p => {
   card.innerHTML = `<span class="cat">${p.cat}</span><span class="name">${p.name}</span>`;
   card.onclick = () => selectProducto(p.id);
   grid.appendChild(card);
+});
+
+/* ---------- search filter ---------- */
+document.getElementById('searchInput').addEventListener('input', function() {
+  var q = this.value.toLowerCase().trim();
+  var activeCat = state.catFiltro;
+  document.querySelectorAll('#productGrid .card').forEach(card => {
+    var name = card.querySelector('.name').textContent.toLowerCase();
+    var cat = card.dataset.cat;
+    var matchCat = activeCat === 'Todos' || cat === activeCat;
+    var matchSearch = !q || name.indexOf(q) !== -1 || cat.toLowerCase().indexOf(q) !== -1;
+    card.classList.toggle('hidden', !(matchCat && matchSearch));
+  });
 });
 
 function selectProducto(id){
@@ -1136,6 +1337,42 @@ function calcAndRender(){
 
   document.getElementById('rendNote').textContent = p.fichaTexto;
 
+  // Precio por m2
+  var precioM2El = document.getElementById('precioM2');
+  if (allHavePrice && precioTotalCombo > 0 && cantidad > 0) {
+    var precioPorM2 = Math.round(precioTotalCombo / cantidad);
+    precioM2El.innerHTML = 'Costo estimado: <b>$' + precioPorM2.toLocaleString('es-AR') + '/m²</b> (sin IVA)';
+  } else {
+    precioM2El.innerHTML = '';
+  }
+
+  // Productos sugeridos
+  var sugBox = document.getElementById('sugeridosBox');
+  var sugList = document.getElementById('sugeridosList');
+  var sugIds = SUGERIDOS[p.id] || [];
+  var sugeresHTML = '';
+  sugIds.forEach(function(sugId) {
+    var sugP = CONFIG.productos.find(function(x){ return x.id === sugId; });
+    if (!sugP) return;
+    // estimate price for 1 presentation unit
+    var sugPrecio = getPrecio(sugId, 0, sugP.presentaciones[0]);
+    var sugPriceStr = sugPrecio ? '$' + sugPrecio.toLocaleString('es-AR') : 'Consultar';
+    sugeresHTML += '<div class="sug-item" data-sug-id="' + sugId + '"><span class="sug-name">' + sugP.name + '</span><span class="sug-price">' + sugPriceStr + '</span></div>';
+  });
+  if (sugeresHTML) {
+    sugList.innerHTML = sugeresHTML;
+    sugBox.style.display = 'block';
+    sugList.querySelectorAll('.sug-item').forEach(function(item) {
+      item.onclick = function() {
+        selectProducto(this.dataset.sugId);
+        document.getElementById('m2Input').focus();
+        window.scrollTo({top:0, behavior:'smooth'});
+      };
+    });
+  } else {
+    sugBox.style.display = 'none';
+  }
+
   const extraBox = document.getElementById('extraBox');
   var fondoBaseTxt = '';
   if (p.sugerirFondoBase){
@@ -1189,6 +1426,7 @@ document.querySelectorAll('.pago-btn').forEach(btn => {
     this.classList.add('active');
     state.pago = this.dataset.pago;
     renderBreakdown();
+    saveState();
   });
 });
 
@@ -1209,6 +1447,7 @@ document.querySelectorAll('.desc-btn').forEach(btn => {
       state.descuento = parseInt(d) / 100;
     }
     renderBreakdown();
+    saveState();
   });
 });
 
@@ -1227,6 +1466,7 @@ document.getElementById('descCustomInput').addEventListener('input', function() 
   if (val > 100) val = 100;
   state.descuento = val / 100;
   renderBreakdown();
+  saveState();
 });
 
 document.getElementById('ivaToggle').addEventListener('click', function() {
@@ -1235,6 +1475,7 @@ document.getElementById('ivaToggle').addEventListener('click', function() {
   this.querySelector('.iva-check').textContent = state.iva ? '\u2713' : '';
   this.dataset.iva = String(state.iva);
   renderBreakdown();
+  saveState();
 });
 
 function renderBreakdown() {
@@ -1251,14 +1492,14 @@ function renderBreakdown() {
 
   if (!hasAnyPrice) { bdEl.innerHTML = ''; return; }
 
-  var pagoConf = PAGO_CONFIG[state.pago];
+  var pagoConf = PAGO_CONFIG[usePago];
   var recargoPct = pagoConf.recargo;
   var recargoMonto = Math.round(subtotal * recargoPct);
   var subconRecargo = subtotal + recargoMonto;
-  var ivaMonto = state.iva ? Math.round(subconRecargo * 0.21) : 0;
+  var ivaMonto = useIva ? Math.round(subconRecargo * 0.21) : 0;
   var totalFinal = subconRecargo + ivaMonto;
 
-  var descPct = state.descuento || 0;
+  var descPct = useDesc;
   var descMonto = Math.round(subtotal * descPct);
   var subtotalDesc = subtotal - descMonto;
   var descLabel = (descPct * 100) + '%';
@@ -1307,6 +1548,74 @@ document.getElementById('addBtn').addEventListener('click', () => {
   if (!lastCalc) return;
   cart.push(JSON.parse(JSON.stringify(lastCalc)));
   renderCart();
+  saveState();
+  showToast('Agregado: ' + lastCalc.producto.name.split(' — ')[0]);
+});
+
+/* ---------- vaciar presupuesto ---------- */
+document.getElementById('clearCartBtn').addEventListener('click', () => {
+  if (cart.length === 0) return;
+  if (!confirm('Borrar todos los items del presupuesto?')) return;
+  cart = [];
+  state.pago = 'efectivo';
+  state.iva = false;
+  state.descuento = 0;
+  document.querySelectorAll('.pago-btn').forEach(b => b.classList.toggle('active', b.dataset.pago === 'efectivo'));
+  document.querySelectorAll('.desc-btn').forEach(b => b.classList.toggle('active', b.dataset.desc === '0'));
+  document.getElementById('descCustomWrap').style.display = 'none';
+  var ivaT = document.getElementById('ivaToggle');
+  ivaT.classList.remove('active');
+  ivaT.querySelector('.iva-check').textContent = '';
+  ivaT.dataset.iva = 'false';
+  renderCart();
+  saveState();
+  showToast('Presupuesto vaciado');
+});
+
+/* ---------- WhatsApp presupuesto completo ---------- */
+document.getElementById('waFullBtn').addEventListener('click', function(e) {
+  e.preventDefault();
+  if (cart.length === 0) return;
+  var cliente = document.getElementById('clienteInput').value.trim() || '';
+  var lines = [];
+  lines.push('Hola Lecatex! Les paso un presupuesto:');
+  if (cliente) lines.push('Cliente: ' + cliente);
+  lines.push('');
+  var subtotal = 0;
+  cart.forEach(function(item) {
+    var vTxt = item.variant ? ' (' + item.variant.label + ')' : '';
+    var comboTxt = item.combo.map(function(c){ return c.count + 'x' + c.size + item.producto.unidad; }).join(' + ');
+    var priceTxt = item.allHavePrice && item.precioTotal > 0 ? ' — $' + item.precioTotal.toLocaleString('es-AR') : '';
+    lines.push('* ' + item.producto.name + vTxt);
+    lines.push('  ' + item.cantidad + ' ' + item.unidadMedida + ' | ' + comboTxt + priceTxt);
+    if (item.allHavePrice) subtotal += item.precioTotal;
+  });
+  lines.push('');
+  // Apply descuento
+  var descPct = useDesc;
+  if (descPct > 0) {
+    var descMonto = Math.round(subtotal * descPct);
+    subtotal = subtotal - descMonto;
+    lines.push('Descuento: -' + (descPct*100) + '% (-$' + descMonto.toLocaleString('es-AR') + ')');
+  }
+  // Apply recargo
+  var pagoConf = PAGO_CONFIG[usePago];
+  if (pagoConf.recargo > 0) {
+    var recargo = Math.round(subtotal * pagoConf.recargo);
+    subtotal += recargo;
+    lines.push('Recargo tarjeta: +$' + recargo.toLocaleString('es-AR'));
+  }
+  // Apply IVA
+  if (state.iva) {
+    var iva = Math.round(subtotal * 0.21);
+    subtotal += iva;
+    lines.push('IVA 21%: +$' + iva.toLocaleString('es-AR'));
+  }
+  lines.push('TOTAL: $' + subtotal.toLocaleString('es-AR'));
+  var obs = document.getElementById('obsInput').value.trim();
+  if (obs) lines.push('Obs: ' + obs);
+  var msg = lines.join('\n');
+  this.href = 'https://wa.me/' + CONFIG.whatsapp + '?text=' + encodeURIComponent(msg);
 });
 
 function renderCart(){
@@ -1315,15 +1624,22 @@ function renderCart(){
   const pdfBtn = document.getElementById('pdfBtn');
   pdfBtn.disabled = cart.length === 0;
 
+  var clearBtn = document.getElementById('clearCartBtn');
+  var waFullBtn = document.getElementById('waFullBtn');
+
   if (cart.length === 0){
     list.innerHTML = '<div class="cart-empty">Todavía no agregaste productos. Calculá arriba y tocá "Agregar al presupuesto".</div>';
     document.getElementById('pagoSection').style.display = 'none';
     if (gtEl) gtEl.style.display = 'none';
+    clearBtn.style.display = 'none';
+    waFullBtn.style.display = 'none';
     return;
   }
 
   // Show payment section when cart has items
   document.getElementById('pagoSection').style.display = 'block';
+  clearBtn.style.display = 'inline-block';
+  waFullBtn.style.display = 'flex';
 
   let grandTotal = 0;
   let hasAnyPrice = false;
@@ -1354,7 +1670,7 @@ function renderCart(){
   }).join('');
 
   list.querySelectorAll('.ci-remove').forEach(btn => {
-    btn.onclick = () => { cart.splice(Number(btn.dataset.idx), 1); renderCart(); };
+    btn.onclick = () => { cart.splice(Number(btn.dataset.idx), 1); renderCart(); saveState(); };
   });
 
   // Grand total
@@ -1372,17 +1688,137 @@ function renderCart(){
   renderBreakdown();
 }
 
+/* ---------- presupuestos guardados ---------- */
+function getSavedBudgets() {
+  try { return JSON.parse(localStorage.getItem('lecatex_saved_budgets') || '[]'); }
+  catch(e) { return []; }
+}
+function saveBudgetToStorage(budgetData) {
+  var saved = getSavedBudgets();
+  saved.unshift(budgetData);
+  // Keep max 50
+  if (saved.length > 50) saved = saved.slice(0, 50);
+  localStorage.setItem('lecatex_saved_budgets', JSON.stringify(saved));
+}
+function updateSavedBudget(index, updates) {
+  var saved = getSavedBudgets();
+  if (saved[index]) {
+    Object.assign(saved[index], updates);
+    localStorage.setItem('lecatex_saved_budgets', JSON.stringify(saved));
+  }
+}
+function deleteSavedBudget(index) {
+  var saved = getSavedBudgets();
+  saved.splice(index, 1);
+  localStorage.setItem('lecatex_saved_budgets', JSON.stringify(saved));
+}
+
+function renderSavedBudgets() {
+  var saved = getSavedBudgets();
+  var list = document.getElementById('savedList');
+  if (saved.length === 0) {
+    list.innerHTML = '<div class="saved-empty">No hay presupuestos guardados.</div>';
+    return;
+  }
+  list.innerHTML = saved.map(function(b, i) {
+    var items = b.cart.map(function(c){ return c.producto.name.split(' — ')[0]; }).join(', ');
+    var paidTag = b.pagado ? '<span class="si-paid">PAGADO</span>' : '';
+    var payBtn = b.pagado
+      ? '<button class="si-btn si-unpay" data-idx="'+i+'">Desmarcar pago</button>'
+      : '<button class="si-btn si-pay" data-idx="'+i+'">Marcar pagado</button>';
+    return '<div class="saved-item">' + paidTag +
+      '<div class="si-header"><span class="si-client">' + (b.cliente || 'Consumidor Final') + '</span><span class="si-date">' + (b.fecha || '') + '</span></div>' +
+      '<div class="si-items">' + items + '</div>' +
+      '<div class="si-total">$' + (b.totalFinal || 0).toLocaleString('es-AR') + '</div>' +
+      '<div class="si-actions">' +
+        '<button class="si-btn si-load" data-idx="'+i+'">Cargar</button>' +
+        payBtn +
+        '<button class="si-btn si-del" data-idx="'+i+'">Eliminar</button>' +
+      '</div></div>';
+  }).join('');
+
+  list.querySelectorAll('.si-load').forEach(function(btn) {
+    btn.onclick = function() {
+      var idx = parseInt(this.dataset.idx);
+      var b = getSavedBudgets()[idx];
+      if (!b) return;
+      cart = b.cart || [];
+      document.getElementById('clienteInput').value = b.cliente || '';
+      document.getElementById('telInput').value = b.telefono || '';
+      document.getElementById('cuitInput').value = b.cuit || '';
+      document.getElementById('obsInput').value = b.obs || '';
+      if (b.pago) { state.pago = b.pago; document.querySelectorAll('.pago-btn').forEach(function(x){x.classList.toggle('active', x.dataset.pago === b.pago);}); }
+      if (b.iva) {
+        state.iva = true;
+        var ivaT = document.getElementById('ivaToggle');
+        ivaT.classList.add('active'); ivaT.querySelector('.iva-check').textContent = '\u2713'; ivaT.dataset.iva = 'true';
+      }
+      renderCart();
+      saveState();
+      document.getElementById('savedModal').classList.remove('show');
+      showToast('Presupuesto cargado (' + cart.length + ' items)');
+    };
+  });
+  list.querySelectorAll('.si-pay').forEach(function(btn) {
+    btn.onclick = function() { updateSavedBudget(parseInt(this.dataset.idx), {pagado:true}); renderSavedBudgets(); showToast('Marcado como PAGADO'); };
+  });
+  list.querySelectorAll('.si-unpay').forEach(function(btn) {
+    btn.onclick = function() { updateSavedBudget(parseInt(this.dataset.idx), {pagado:false}); renderSavedBudgets(); showToast('Pago desmarcado'); };
+  });
+  list.querySelectorAll('.si-del').forEach(function(btn) {
+    btn.onclick = function() { if(!confirm('Eliminar este presupuesto?')) return; deleteSavedBudget(parseInt(this.dataset.idx)); renderSavedBudgets(); showToast('Presupuesto eliminado'); };
+  });
+}
+
+document.getElementById('openSavedBtn').addEventListener('click', function() { renderSavedBudgets(); document.getElementById('savedModal').classList.add('show'); });
+document.getElementById('closeSavedModal').addEventListener('click', function() { document.getElementById('savedModal').classList.remove('show'); });
+document.getElementById('savedModal').addEventListener('click', function(e) { if (e.target === this) this.classList.remove('show'); });
+
+/* mark current budget as pagado + regenerate PDF */
+var currentBudgetId = null;
+document.getElementById('markPagadoBtn').addEventListener('click', function() {
+  if (currentBudgetId === null) { showToast('Primero generá un PDF'); return; }
+  var saved = getSavedBudgets();
+  // find by id
+  var idx = saved.findIndex(function(b){ return b.id === currentBudgetId; });
+  if (idx === -1) { showToast('No se encontró el presupuesto'); return; }
+  saved[idx].pagado = true;
+  localStorage.setItem('lecatex_saved_budgets', JSON.stringify(saved));
+  showToast('Marcado como PAGADO — regenerá el PDF');
+  this.style.display = 'none';
+  // Auto-regenerate PDF with PAGADO watermark
+  generatePDF(saved[idx]);
+});
+
 /* ---------- generar PDF ---------- */
-document.getElementById('pdfBtn').addEventListener('click', () => {
-  if (cart.length === 0) return;
+function generatePDF(overrideData) {
+  var budgetData = overrideData || null;
+  if (!budgetData && cart.length === 0) return;
+
+  var useCart = budgetData ? budgetData.cart : cart;
+  var usePago = budgetData ? (budgetData.pago || 'efectivo') : state.pago;
+  var useIva = budgetData ? (budgetData.iva || false) : state.iva;
+  var useDesc = budgetData ? (budgetData.descuento || 0) : (state.descuento || 0);
+  var useCliente = budgetData ? (budgetData.cliente || 'Consumidor Final') : (document.getElementById('clienteInput').value.trim() || 'Consumidor Final');
+  var useTelefono = budgetData ? (budgetData.telefono || '') : document.getElementById('telInput').value.trim();
+  var useCuit = budgetData ? (budgetData.cuit || '') : document.getElementById('cuitInput').value.trim();
+  var useIvaCond = budgetData ? (budgetData.ivaCond || 'Consumidor Final') : document.getElementById('ivaCondInput').value;
+  var useObs = budgetData ? (budgetData.obs || '') : document.getElementById('obsInput').value.trim();
+  var useVigDias = budgetData ? (budgetData.vigDias || 30) : (parseInt(document.getElementById('vigenciaInput').value) || 30);
+  var isPagado = budgetData ? (budgetData.pagado || false) : false;
+
   const { jsPDF } = window.jspdf;
   const doc = new jsPDF();
 
-  const cliente = document.getElementById('clienteInput').value.trim() || 'Consumidor Final';
-  const telefono = document.getElementById('telInput').value.trim();
+  const cliente = useCliente;
+  const telefono = useTelefono;
+  const cuit = useCuit;
+  const ivaCond = useIvaCond;
+  const obs = useObs;
+  const vigDias = useVigDias;
 
   const hoy = new Date();
-  const vence = new Date(hoy); vence.setDate(vence.getDate() + 30);
+  const vence = new Date(hoy); vence.setDate(vence.getDate() + vigDias);
   const fmt = d => d.toLocaleDateString('es-AR', { day:'2-digit', month:'2-digit', year:'numeric' });
   const folio = 'LX-' + hoy.getFullYear() + String(hoy.getMonth()+1).padStart(2,'0') + String(hoy.getDate()).padStart(2,'0') + '-' + String(hoy.getHours()).padStart(2,'0') + String(hoy.getMinutes()).padStart(2,'0');
 
@@ -1426,11 +1862,25 @@ document.getElementById('pdfBtn').addEventListener('click', () => {
     doc.setFont('helvetica','normal');
     doc.text(telefono, 148, 60);
   }
+  if (cuit){
+    doc.setFont('helvetica','bold');
+    doc.text('CUIT/DNI:', 14, 66);
+    doc.setFont('helvetica','normal');
+    doc.text(cuit, 40, 66);
+  }
+  if (ivaCond && ivaCond !== 'Consumidor Final'){
+    doc.setFont('helvetica','bold');
+    var cuitX = cuit ? 120 : 140;
+    doc.text('Cond. IVA:', cuitX, 66);
+    doc.setFont('helvetica','normal');
+    doc.text(ivaCond, cuitX + 22, 66);
+  }
+  var clienteEndY = (cuit || (ivaCond && ivaCond !== 'Consumidor Final')) ? 72 : 66;
 
   // Tabla de items con precios
   var rows = [];
   var pdfGrandTotal = 0;
-  cart.forEach(function(item) {
+  useCart.forEach(function(item) {
     var variantTxt = item.variant ? ' (' + item.variant.label + ')' : '';
     var detalle = item.cantidad + ' ' + item.unidadMedida;
     var cantidadTxt = item.neededMin.toFixed(1) + '\u2013' + item.neededMax.toFixed(1) + ' ' + item.producto.unidad;
@@ -1449,7 +1899,7 @@ document.getElementById('pdfBtn').addEventListener('click', () => {
   });
 
   doc.autoTable({
-    startY: 68,
+    startY: typeof clienteEndY !== 'undefined' ? clienteEndY + 2 : 68,
     head: [['Producto', 'Superficie', 'Material nec.', 'Presentacion sugerida', 'Subtotal (s/IVA)']],
     body: rows,
     theme: 'grid',
@@ -1467,15 +1917,15 @@ document.getElementById('pdfBtn').addEventListener('click', () => {
   });
 
   // Totales con descuento, forma de pago e IVA
-  var pagoConf = PAGO_CONFIG[state.pago];
+  var pagoConf = PAGO_CONFIG[usePago];
   var recargoPct = pagoConf.recargo;
-  var descPct = state.descuento || 0;
+  var descPct = useDesc;
   var descMonto = Math.round(pdfGrandTotal * descPct);
   var subtotalDesc = pdfGrandTotal - descMonto;
   var baseRecargo = descPct > 0 ? subtotalDesc : pdfGrandTotal;
   var recargoMonto = Math.round(baseRecargo * recargoPct);
   var subconRecargo = baseRecargo + recargoMonto;
-  var ivaMonto = state.iva ? Math.round(subconRecargo * 0.21) : 0;
+  var ivaMonto = useIva ? Math.round(subconRecargo * 0.21) : 0;
   var totalFinal = subconRecargo + ivaMonto;
 
   if (pdfGrandTotal > 0) {
@@ -1549,7 +1999,7 @@ document.getElementById('pdfBtn').addEventListener('click', () => {
     doc.text('$' + totalFinal.toLocaleString('es-AR'), 196, yT, { align: 'right' });
 
     // Cuotas si tarjeta 3/6
-    if (state.pago === 'tarjeta3') {
+    if (usePago === 'tarjeta3') {
       yT += 7;
       doc.setFont('helvetica','normal');
       doc.setFontSize(9);
@@ -1562,6 +2012,16 @@ document.getElementById('pdfBtn').addEventListener('click', () => {
     var y = doc.lastAutoTable.finalY + 12;
   }
 
+  // Observaciones
+  if (obs) {
+    doc.setFont('helvetica','bold');
+    doc.setFontSize(9);
+    doc.setTextColor(23,25,28);
+    var obsLines = doc.splitTextToSize('Observaciones: ' + obs, 182);
+    doc.text(obsLines, 14, y);
+    y += obsLines.length * 4.5 + 4;
+  }
+
   // Condiciones
   doc.setFontSize(8.5);
   doc.setTextColor(90,90,90);
@@ -1569,14 +2029,14 @@ document.getElementById('pdfBtn').addEventListener('click', () => {
   var condicionesList = [];
   condicionesList.push('Rendimientos estimativos según ficha técnica de fábrica Lecatex.');
   condicionesList.push('Sujetos a confirmación de stock al momento de la compra.');
-  if (state.iva) {
+  if (useIva) {
     condicionesList.push('Precios con IVA 21% incluido. Recargo por tarjeta ya aplicado.');
   } else if (recargoPct > 0) {
     condicionesList.push('Precio con recargo por tarjeta (' + (recargoPct * 100) + '%). Sin IVA.');
   } else {
     condicionesList.push('Precios sin IVA. Efectivo / transferencia.');
   }
-  condicionesList.push('Validez de este presupuesto: 30 días corridos desde su emisión (vence el ' + fmt(vence) + ').');
+  condicionesList.push('Validez de este presupuesto: ' + vigDias + ' días corridos desde su emisión (vence el ' + fmt(vence) + ').');
   condicionesList.push('Precios directo de fábrica en Pilar, Buenos Aires. Consultá formas de pago y envío por WhatsApp.');
 
   condicionesList.forEach(function(line) {
@@ -1596,8 +2056,69 @@ document.getElementById('pdfBtn').addEventListener('click', () => {
   doc.text('L-V 9-13 / 16-19 · Sáb 9-13 · Feriados nac. CERRADO · No lab. ABIERTO', 14, 293);
   doc.text(folio, 196, 285, { align: 'right' });
 
+  // PAGADO watermark
+  if (isPagado) {
+    doc.setGState(new doc.GState({opacity:0.12}));
+    doc.setTextColor(220,40,40);
+    doc.setFont('helvetica','bold');
+    doc.setFontSize(72);
+    doc.text('PAGADO', 105, 150, {align:'center', angle:45});
+    doc.setGState(new doc.GState({opacity:1}));
+  }
+
   doc.save(`Presupuesto_${folio}_${cliente.replace(/\s+/g,'_')}.pdf`);
+}
+
+// Save budget to saved list when generating PDF
+document.getElementById('pdfBtn').addEventListener('click', () => {
+  if (cart.length === 0) return;
+
+  // Save to saved budgets
+  var pagoConf2 = PAGO_CONFIG[state.pago];
+  var descPct2 = state.descuento || 0;
+  var subtotal2 = 0;
+  cart.forEach(function(item){ if(item.allHavePrice && item.precioTotal > 0) subtotal2 += item.precioTotal; });
+  var descMonto2 = Math.round(subtotal2 * descPct2);
+  var baseR2 = descPct2 > 0 ? subtotal2 - descMonto2 : subtotal2;
+  var recargo2 = Math.round(baseR2 * pagoConf2.recargo);
+  var subR2 = baseR2 + recargo2;
+  var iva2 = state.iva ? Math.round(subR2 * 0.21) : 0;
+  var totalF2 = subR2 + iva2;
+
+  var hoy2 = new Date();
+  var budgetId = 'LX-' + hoy2.getFullYear() + String(hoy2.getMonth()+1).padStart(2,'0') + String(hoy2.getDate()).padStart(2,'0') + '-' + String(hoy2.getHours()).padStart(2,'0') + String(hoy2.getMinutes()).padStart(2,'0');
+
+  var saveData = {
+    id: budgetId,
+    fecha: hoy2.toLocaleDateString('es-AR', {day:'2-digit',month:'2-digit',year:'numeric'}),
+    cliente: document.getElementById('clienteInput').value.trim() || 'Consumidor Final',
+    telefono: document.getElementById('telInput').value.trim(),
+    cuit: document.getElementById('cuitInput').value.trim(),
+    ivaCond: document.getElementById('ivaCondInput').value,
+    obs: document.getElementById('obsInput').value.trim(),
+    vigDias: parseInt(document.getElementById('vigenciaInput').value) || 30,
+    cart: JSON.parse(JSON.stringify(cart)),
+    pago: state.pago,
+    iva: state.iva,
+    descuento: state.descuento,
+    totalFinal: totalF2,
+    pagado: false
+  };
+  saveBudgetToStorage(saveData);
+  currentBudgetId = budgetId;
+  document.getElementById('markPagadoBtn').style.display = 'inline-block';
+
+  generatePDF();
 });
 </script>
+
+<div class="modal-overlay" id="savedModal">
+  <div class="modal">
+    <div class="modal-hdr"><h3>Presupuestos guardados</h3><button class="modal-close" id="closeSavedModal">✕</button></div>
+    <div class="modal-body" id="savedList"><div class="saved-empty">No hay presupuestos guardados.</div></div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
 </body>
 </html>
