@@ -375,6 +375,15 @@
   </footer>
 </div>
 
+<div class="modal-overlay" id="savedModal">
+  <div class="modal">
+    <div class="modal-hdr"><h3>Presupuestos guardados</h3><button class="modal-close" id="closeSavedModal">✕</button></div>
+    <div class="modal-body" id="savedList"><div class="saved-empty">No hay presupuestos guardados.</div></div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
 <script>
 /* =========================================================
    CONFIG — catálogo completo www.lecatex.com.ar/productos
@@ -2107,14 +2116,5 @@ document.getElementById('pdfBtn').addEventListener('click', () => {
   generatePDF();
 });
 </script>
-
-<div class="modal-overlay" id="savedModal">
-  <div class="modal">
-    <div class="modal-hdr"><h3>Presupuestos guardados</h3><button class="modal-close" id="closeSavedModal">✕</button></div>
-    <div class="modal-body" id="savedList"><div class="saved-empty">No hay presupuestos guardados.</div></div>
-  </div>
-</div>
-
-<div class="toast" id="toast"></div>
 </body>
 </html>
