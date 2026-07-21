@@ -238,7 +238,10 @@
   </div>
 
   <footer>
-    José Hernández 3035, Villa Ballester · Lun a Vie 9-13 y 16-19 hs · Sáb 9-13 hs · Feriados cerrado · Feriados no laborables abierto<br>
+    José Hernández 3035, Villa Ballester<br>
+    <b>Horarios:</b> Lunes a Viernes 9 a 13 y 16 a 19 · Sábados 9 a 13<br>
+    Feriados nacionales <span style="color:var(--warn);">CERRADO</span> · Feriados no laborables <span style="color:var(--ok);">ABIERTO</span><br>
+    WhatsApp: <a href="https://wa.me/5491157626573" style="color:var(--safety);">11 5762-6573 (Aníbal)</a> · <a href="https://wa.me/5491165739246" style="color:var(--safety);">11 6573-9246 (Osvaldo)</a><br>
     Rendimientos según ficha técnica de fábrica Lecatex. Los valores son estimativos: la superficie, absorción y estado de la base pueden variar el consumo real. Válido por 30 días desde la fecha de emisión.
   </footer>
 </div>
@@ -1313,7 +1316,7 @@ document.getElementById('pdfBtn').addEventListener('click', () => {
 
   // Header
   doc.setFillColor(23,25,28);
-  doc.rect(0,0,210,32,'F');
+  doc.rect(0,0,210,37,'F');
   doc.setTextColor(244,194,43);
   doc.setFont('helvetica','bold');
   doc.setFontSize(20);
@@ -1321,8 +1324,9 @@ document.getElementById('pdfBtn').addEventListener('click', () => {
   doc.setTextColor(236,234,228);
   doc.setFont('helvetica','normal');
   doc.setFontSize(9);
-  doc.text('José Hernández 3035, Villa Ballester  ·  WhatsApp 11 2533-5512 / 11 6573-9246', 14, 23);
+  doc.text('José Hernández 3035, Villa Ballester  ·  WhatsApp 11 5762-6573 (Aníbal) / 11 6573-9246 (Osvaldo)', 14, 23);
   doc.text('Distribuidor oficial Lecatex — Zona Norte', 14, 28);
+  doc.text('L-V 9-13 / 16-19  ·  Sáb 9-13  ·  Feriados nac. CERRADO  ·  No lab. ABIERTO', 14, 33);
 
   // Título presupuesto
   doc.setTextColor(23,25,28);
@@ -1498,7 +1502,9 @@ document.getElementById('pdfBtn').addEventListener('click', () => {
   doc.line(14, 280, 196, 280);
   doc.setFontSize(8);
   doc.setTextColor(120,120,120);
-  doc.text('Lecatex Express — José León Suárez, Buenos Aires', 14, 285);
+  doc.text('Lecatex Express — José Hernández 3035, Villa Ballester', 14, 285);
+  doc.text('WA 11 5762-6573 (Aníbal) / 11 6573-9246 (Osvaldo)', 14, 289);
+  doc.text('L-V 9-13 / 16-19 · Sáb 9-13 · Feriados nac. CERRADO · No lab. ABIERTO', 14, 293);
   doc.text(folio, 196, 285, { align: 'right' });
 
   doc.save(`Presupuesto_${folio}_${cliente.replace(/\s+/g,'_')}.pdf`);
