@@ -111,9 +111,15 @@
   .cart-item:last-child{border-bottom:none;}
   .cart-item .ci-name{font-weight:700;color:var(--paper);}
   .cart-item .ci-detail{color:var(--paper-dim);font-size:12px;margin-top:2px;}
-  .cart-item .ci-remove{background:none;border:1px solid var(--line);color:var(--paper-dim);cursor:pointer;border-radius:50%;width:22px;height:22px;flex-shrink:0;font-size:12px;line-height:1;}
+  .cart-item .ci-remove{background:none;border:1px solid var(--line);color:var(--paper-dim);cursor:pointer;border-radius:50%;width:22px;height:22px;flex-shrink:0;font-size:12px;line-height:1;align-self:center;}
   .cart-item .ci-remove:hover{border-color:var(--warn);color:var(--warn);}
   .cart-empty{color:var(--paper-dim);font-size:13px;font-style:italic;}
+  .ci-prices{margin-top:6px;}
+  .ci-price-row{display:flex;align-items:center;gap:6px;margin-top:3px;font-size:12px;color:var(--paper-dim);}
+  .ci-price-row label{white-space:nowrap;min-width:70px;}
+  .ci-price-input{width:90px;text-align:right;background:var(--ink);color:var(--safety);border:1px solid var(--line);border-radius:var(--radius);padding:3px 6px;font-size:12px;font-weight:700;}
+  .ci-price-input:focus{border-color:var(--safety);outline:none;}
+  .ci-price-sub{font-weight:600;color:var(--paper);min-width:80px;text-align:right;}
 
   .field-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px;}
   @media (max-width:520px){.field-row{grid-template-columns:1fr;}}
@@ -1418,7 +1424,9 @@ function calcAndRender(){
   var waMsg = 'Hola Lecatex! Quiero cotizar ' + p.name + waVariantTxt + ' para ' + cantidad + ' ' + unidadMedida + '. Segun el calculo necesitaria: ' + waComboTxt + '.' + waTotalStr + ' Me confirman precio y stock?';
   document.getElementById('waBtn').href = 'https://wa.me/' + CONFIG.whatsapp + '?text=' + encodeURIComponent(waMsg);
 
-  lastCalc = { producto: p, variant, cantidad, unidadMedida, neededMin, neededMax, combo: state.editableCombo.filter(function(ec){return ec.count>0;}), waste, total, colorIdx: state.colorIdx, precioTotal: precioTotalCombo || 0, allHavePrice: allHavePrice };
+  lastCalc = { producto: p, variant, cantidad, unidadMedida, neededMin, neededMax, combo: state.editableCombo.filter(function(ec){return ec.count>0;}).map(function(ec){ return {size:ec.size, count:ec.count, precioUnitario: getPrecio(p.id, state.colorIdx, ec.size)}; }), waste, total, colorIdx: state.colorIdx, precioTotal: precioTotalCombo || 0, allHavePrice: allHavePrice, precioOverrides: {} };
+  // Build precioOverrides from combo
+  lastCalc.combo.forEach(function(c) { lastCalc.precioOverrides[String(c.size)] = c.precioUnitario || 0; });
   resultEl.classList.add('show');
 }
 
@@ -1649,25 +1657,51 @@ function renderCart(){
   let grandTotal = 0;
   let hasAnyPrice = false;
 
+  // Ensure each cart item has precioOverrides
+  cart.forEach(function(item) {
+    if (!item.precioOverrides) {
+      item.precioOverrides = {};
+      item.combo.forEach(function(c) {
+        var originalPrecio = getPrecio(item.producto.id, item.colorIdx, c.size);
+        item.precioOverrides[String(c.size)] = originalPrecio || 0;
+      });
+    }
+  });
+
   list.innerHTML = cart.map((item, i) => {
     const variantTxt = item.variant ? ` — ${item.variant.label}` : '';
     const comboTxt = item.combo.map(c => `${c.count}x ${c.size}${item.producto.unidad}`).join(' + ');
 
+    // Build price rows
     let itemTotal = 0;
-    let itemPriceLines = '';
-    if (item.allHavePrice && item.precioTotal > 0) {
-      itemTotal = item.precioTotal;
+    let priceRowsHTML = '';
+    item.combo.forEach(function(c) {
+      var sizeKey = String(c.size);
+      var precio = item.precioOverrides[sizeKey] !== undefined ? item.precioOverrides[sizeKey] : 0;
+      var subtotal = precio * c.count;
+      itemTotal += subtotal;
+      priceRowsHTML += `<div class="ci-price-row">
+        <label>${c.count}x ${c.size}${item.producto.unidad}</label>
+        <span>$</span>
+        <input type="number" class="ci-price-input" data-idx="${i}" data-size="${sizeKey}" value="${precio}" min="0" step="1000">
+        <span>c/u</span>
+        <span class="ci-price-sub">${subtotal > 0 ? '$' + subtotal.toLocaleString('es-AR') : '—'}</span>
+      </div>`;
+    });
+
+    if (itemTotal > 0) {
       grandTotal += itemTotal;
       hasAnyPrice = true;
-      itemPriceLines = `<div class="cart-price">$${itemTotal.toLocaleString('es-AR')} (sin IVA)</div>`;
     }
+    var itemTotalStr = itemTotal > 0 ? `<div class="cart-price">$${itemTotal.toLocaleString('es-AR')} (sin IVA)</div>` : '';
 
     return `
       <div class="cart-item">
         <div style="flex:1;">
           <div class="ci-name">${item.producto.name}${variantTxt}</div>
           <div class="ci-detail">${item.cantidad} ${item.unidadMedida} · ${comboTxt}</div>
-          ${itemPriceLines}
+          <div class="ci-prices">${priceRowsHTML}</div>
+          ${itemTotalStr}
         </div>
         <button class="ci-remove" data-idx="${i}">✕</button>
       </div>
@@ -1676,6 +1710,26 @@ function renderCart(){
 
   list.querySelectorAll('.ci-remove').forEach(btn => {
     btn.onclick = () => { cart.splice(Number(btn.dataset.idx), 1); renderCart(); saveState(); };
+  });
+
+  // Price edit handlers
+  list.querySelectorAll('.ci-price-input').forEach(inp => {
+    inp.addEventListener('change', function() {
+      var idx = parseInt(this.dataset.idx);
+      var sizeKey = this.dataset.size;
+      var val = parseInt(this.value) || 0;
+      if (val < 0) val = 0;
+      this.value = val;
+      cart[idx].precioOverrides[sizeKey] = val;
+      var item = cart[idx];
+      var newTotal = 0;
+      item.combo.forEach(function(c) { newTotal += (item.precioOverrides[String(c.size)] || 0) * c.count; });
+      item.precioTotal = newTotal;
+      item.allHavePrice = newTotal > 0;
+      saveState();
+      renderCart();
+      renderBreakdown();
+    });
   });
 
   // Grand total
@@ -1890,9 +1944,9 @@ function generatePDF(overrideData) {
     var detalle = item.cantidad + ' ' + item.unidadMedida;
     var cantidadTxt = item.neededMin.toFixed(1) + '\u2013' + item.neededMax.toFixed(1) + ' ' + item.producto.unidad;
     var presentacion = item.combo.map(function(c) {
-      var precio = getPrecio(item.producto.id, item.colorIdx, c.size);
+      var precio = (item.precioOverrides && item.precioOverrides[String(c.size)]) ? item.precioOverrides[String(c.size)] : getPrecio(item.producto.id, item.colorIdx, c.size);
       var precioStr = precio ? '$' + precio.toLocaleString('es-AR') : '';
-      return c.count + ' x ' + c.size + item.producto.unidad + (precioStr ? ' (' + precioStr + ')' : '');
+      return c.count + ' x ' + c.size + item.producto.unidad + (precioStr ? ' (' + precioStr + ' c/u)' : '');
     }).join(' + ');
     var subtotal = 0;
     if (item.allHavePrice && item.precioTotal > 0) {
