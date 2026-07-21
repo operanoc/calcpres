@@ -1625,7 +1625,8 @@ function renderCart(){
   if (cart.length === 0){
     list.innerHTML = '<div class="cart-empty">Todavía no agregaste productos. Calculá arriba y tocá "Agregar al presupuesto".</div>';
     document.getElementById('pagoSection').style.display = 'none';
-    if (gtEl) gtEl.style.display = 'none';
+    var gtHide = document.getElementById('grandTotal');
+    if (gtHide) gtHide.style.display = 'none';
     clearBtn.style.display = 'none';
     waFullBtn.style.display = 'none';
     return;
